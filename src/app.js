@@ -7,6 +7,8 @@ const logger = require('morgan');
 const helmet = require('helmet');
 require('dotenv').config()
 
+var port = process.env.PORT || 3000;
+
 const professoresServiceProxy = httpProxy(`${process.env.URL_PROFESSORES}:${process.env.PORT_PROFESSORES}`);
 const alunosServiceProxy = httpProxy(`${process.env.URL_ALUNOS}:${process.env.PORT_ALUNOS}`);
 
@@ -27,8 +29,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 const server = http.createServer(app);
-server.listen(process.env.GATEWAY_PORT, () => {
-    console.log(`listem to port ${process.env.GATEWAY_PORT}`)
+server.listen(port, () => {
+    console.log(`listem to port ${port}`)
 })
 
 app.get('/', (req, res, next) => {
