@@ -3,8 +3,15 @@
 ### API Gateway do sistema academico da cadeira de Desenvolvimento de componentes e serviços
 
 
-####Url:
+#### Url:
 
 ```
 https://dcs-api-gateway.herokuapp.com/
 ```
+#### Endpoints:
+
+- /upload
+- /professores
+- /alunos
+- /curso
+- /autenticacao
