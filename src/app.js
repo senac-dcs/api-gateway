@@ -7,9 +7,10 @@ const logger = require('morgan');
 const helmet = require('helmet');
 require('dotenv').config()
 
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 4000;
 
 const professoresServiceProxy = httpProxy(`${process.env.URL_PROFESSORES}:${process.env.PORT_PROFESSORES}`);
+console.log(`${process.env.URL_ALUNOS}:${process.env.PORT_ALUNOS}`)
 const alunosServiceProxy = httpProxy(`${process.env.URL_ALUNOS}:${process.env.PORT_ALUNOS}`);
 
 app.get('/professores', (req, res, next) => {
