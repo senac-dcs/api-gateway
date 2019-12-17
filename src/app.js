@@ -9,19 +9,33 @@ require('dotenv').config()
 
 var port = process.env.PORT || 4000;
 
-const professoresServiceProxy = httpProxy(`${process.env.URL_PROFESSORES}:${process.env.PORT_PROFESSORES}`);
-console.log(`${process.env.URL_ALUNOS}:${process.env.PORT_ALUNOS}`)
+const auth = require('./controllers/autenticacao');
 const alunosServiceProxy = httpProxy(`${process.env.URL_ALUNOS}:${process.env.PORT_ALUNOS}`);
+const professoresServiceProxy = httpProxy(`${process.env.URL_PROFESSORES}`);
+const cursoServiceProxy = httpProxy(`${process.env.URL_CURSOS}`);
+const uploadsServiceProxy = httpProxy(`${process.env.URL_UPLOADS}`);
+const autenticacaoServiceProxy = httpProxy(`${process.env.URL_AUTENTICACAO}`)
 
-app.get('/professores', (req, res, next) => {
+
+app.all('/professores*', auth.verificaToken, (req, res, next) => {
     professoresServiceProxy(req, res, next);
-})
+});
 
-app.get('/alunos', (req, res, next) => {
+app.all('/alunos*', auth.verificaToken, (req, res, next) => {
     alunosServiceProxy(req, res, next);
-})
+});
 
-console.log(process.env.PORT_ALUNOS);
+app.all('/cursos*', auth.verificaToken, (req, res, next) => {
+    cursoServiceProxy(req, res, next);
+});
+
+app.all('/uploads*', auth.verificaToken, (req, res, next) => {
+    uploadsServiceProxy(req, res, next);
+});
+
+app.all('/autenticacao/*', (req, res, next) => {
+    autenticacaoServiceProxy(req, res, next);
+});
 
 app.use(logger('dev'));
 app.use(helmet());
