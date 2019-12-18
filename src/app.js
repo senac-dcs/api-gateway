@@ -25,7 +25,7 @@ app.all('/alunos*', auth.verificaToken, (req, res, next) => {
     alunosServiceProxy(req, res, next);
 });
 
-app.all('/cursos*', auth.verificaToken, (req, res, next) => {
+app.all('/api/cursos*', auth.verificaToken, (req, res, next) => {
     cursoServiceProxy(req, res, next);
 });
 
